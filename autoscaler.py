@@ -26,17 +26,14 @@ def init_csv():
 
 
 def get_running_app_containers():
-  cmd = (
-      "docker ps --filter 'name=app-container-' --format '{{.Names}}'"
-      " --sort=name"
-  )
+  cmd = "docker ps --filter 'name=app-container-' --format '{{.Names}}'"
   result = subprocess.run(
       cmd, shell=True, capture_output=True, text=True, check=True
   )
   containers = [
       c.strip() for c in result.stdout.splitlines() if c.strip()
   ]
-  return containers
+  return sorted(containers)
 
 
 def get_container_cpu(container_name):
